@@ -114,6 +114,13 @@ You’ll see a simple menu:
 
 ---
 
+### Install via Homebrew:
+
+```bash
+brew tap willcurtis/tools
+brew install modbus-relay-control
+```
+
 ## 📜 License
 
 This project is licensed under the MIT License.
