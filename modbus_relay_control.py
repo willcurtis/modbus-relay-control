@@ -43,7 +43,6 @@ class ModbusRelayController:
         if not self.connected:
             logger.error("❌ Not connected to Modbus relay.")
             return
-
         try:
             relay_address = relay_id - 1
             response = self.client.write_coil(address=relay_address, value=state)
@@ -58,19 +57,16 @@ class ModbusRelayController:
         if not self.connected:
             logger.error("❌ Not connected to Modbus relay.")
             return
-
         logger.info(f"🔄 Setting ALL relays to {'ON' if state else 'OFF'}...")
         for relay_id in range(1, 9):
             self.set_relay_state(relay_id, state)
             time.sleep(0.05)
-
         logger.info("✅ All relays updated.")
 
     def read_relay_state(self, relay_id):
         if not self.connected:
             logger.error("❌ Not connected to Modbus relay.")
             return None
-
         try:
             relay_address = relay_id - 1
             response = self.client.read_coils(address=relay_address, count=1)
@@ -86,7 +82,6 @@ class ModbusRelayController:
         if not self.connected:
             logger.error("❌ Not connected to Modbus relay.")
             return
-
         try:
             response = self.client.read_coils(address=0, count=8)
             if response.isError():
@@ -111,32 +106,25 @@ def save_profile(controller, profile_name):
     if states is None:
         logger.error("❌ Cannot save profile. Could not read relay states.")
         return
-
     if os.path.exists(PROFILE_FILE):
         with open(PROFILE_FILE, "r") as f:
             profiles = json.load(f)
     else:
         profiles = {}
-
     profiles[profile_name] = states
-
     with open(PROFILE_FILE, "w") as f:
         json.dump(profiles, f, indent=2)
-
     logger.info(f"✅ Profile '{profile_name}' saved.")
 
 def load_profile(controller, profile_name):
     if not os.path.exists(PROFILE_FILE):
         logger.error("❌ No profiles found.")
         return
-
     with open(PROFILE_FILE, "r") as f:
         profiles = json.load(f)
-
     if profile_name not in profiles:
         logger.error(f"❌ Profile '{profile_name}' not found.")
         return
-
     states = profiles[profile_name]
     logger.info(f"🔄 Loading profile '{profile_name}'...")
     for relay_id, state in enumerate(states, start=1):
@@ -148,10 +136,8 @@ def list_profiles():
     if not os.path.exists(PROFILE_FILE):
         logger.error("❌ No profiles found.")
         return
-
     with open(PROFILE_FILE, "r") as f:
         profiles = json.load(f)
-
     logger.info("📋 Available Profiles:")
     for name in profiles.keys():
         logger.info(f" - {name}")
@@ -233,7 +219,7 @@ def run_cli_command(controller, args):
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Control Modbus TCP Relay Board.")
-    parser.add_argument("--ip", required=True, help="IP address of the relay board")
+    parser.add_argument("--ip", help="IP address of the relay board")
     parser.add_argument("--port", type=int, default=502, help="TCP port (default 502)")
     parser.add_argument("--relay", type=int, help="Relay number to toggle (1-8)")
     parser.add_argument("--state", choices=["on", "off"], help="State to set relay or all relays")
@@ -246,16 +232,24 @@ def parse_arguments():
 
 def main():
     args = parse_arguments()
+
+    if args.list_profiles:
+        list_profiles()
+        sys.exit(0)
+
+    if not args.ip:
+        print("❌ Error: --ip is required unless using --list-profiles.")
+        sys.exit(1)
+
     controller = ModbusRelayController(args.ip, args.port)
 
     if not controller.connected:
         sys.exit(1)
 
-    if args.relay or args.all or args.status or args.save_profile or args.load_profile or args.list_profiles:
+    if args.relay or args.all or args.status or args.save_profile or args.load_profile:
         run_cli_command(controller, args)
     else:
         interactive_menu(controller)
 
 if __name__ == "__main__":
     main()
-

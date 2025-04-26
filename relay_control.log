@@ -1,0 +1,76 @@
+2025-04-26 09:58:38,362 - INFO - ✅ Connected to Modbus relay at 10.194.10.154:502
+2025-04-26 09:58:38,373 - INFO - 🔎 Relay Status:
+2025-04-26 09:58:38,373 - INFO -   Relay 1: OFF
+2025-04-26 09:58:38,373 - INFO -   Relay 2: OFF
+2025-04-26 09:58:38,373 - INFO -   Relay 3: OFF
+2025-04-26 09:58:38,373 - INFO -   Relay 4: OFF
+2025-04-26 09:58:38,373 - INFO -   Relay 5: OFF
+2025-04-26 09:58:38,373 - INFO -   Relay 6: OFF
+2025-04-26 09:58:38,373 - INFO -   Relay 7: OFF
+2025-04-26 09:58:38,373 - INFO -   Relay 8: OFF
+2025-04-26 09:58:38,373 - INFO - 🔌 Connection closed.
+2025-04-26 10:00:14,880 - WARNING - Attempt 1/3: Connection failed. Retrying...
+2025-04-26 10:00:20,903 - WARNING - Attempt 2/3: Connection failed. Retrying...
+2025-04-26 10:00:21,939 - INFO - ✅ Connected to Modbus relay at 10.194.10.154:502
+2025-04-26 10:00:22,217 - INFO - ✅ Relay 3 set to ON successfully.
+2025-04-26 10:00:22,217 - INFO - 🔌 Connection closed.
+2025-04-26 10:00:27,683 - INFO - ✅ Connected to Modbus relay at 10.194.10.154:502
+2025-04-26 10:00:27,693 - INFO - ✅ Relay 1 set to ON successfully.
+2025-04-26 10:00:27,693 - INFO - 🔌 Connection closed.
+2025-04-26 10:00:32,781 - INFO - ✅ Connected to Modbus relay at 10.194.10.154:502
+2025-04-26 10:00:32,791 - INFO - ✅ Relay 5 set to ON successfully.
+2025-04-26 10:00:32,791 - INFO - 🔌 Connection closed.
+2025-04-26 10:00:38,584 - INFO - ✅ Connected to Modbus relay at 10.194.10.154:502
+2025-04-26 10:00:38,594 - INFO - ✅ Relay 7 set to ON successfully.
+2025-04-26 10:00:38,594 - INFO - 🔌 Connection closed.
+2025-04-26 10:00:42,633 - INFO - ✅ Connected to Modbus relay at 10.194.10.154:502
+2025-04-26 10:00:42,643 - INFO - 🔎 Relay Status:
+2025-04-26 10:00:42,643 - INFO -   Relay 1: ON
+2025-04-26 10:00:42,643 - INFO -   Relay 2: OFF
+2025-04-26 10:00:42,643 - INFO -   Relay 3: ON
+2025-04-26 10:00:42,643 - INFO -   Relay 4: OFF
+2025-04-26 10:00:42,643 - INFO -   Relay 5: ON
+2025-04-26 10:00:42,643 - INFO -   Relay 6: OFF
+2025-04-26 10:00:42,643 - INFO -   Relay 7: ON
+2025-04-26 10:00:42,643 - INFO -   Relay 8: OFF
+2025-04-26 10:00:42,643 - INFO - 🔌 Connection closed.
+2025-04-26 10:01:10,564 - INFO - ✅ Connected to Modbus relay at 10.194.10.154:502
+2025-04-26 10:01:10,575 - INFO - 🔎 Relay Status:
+2025-04-26 10:01:10,575 - INFO -   Relay 1: ON
+2025-04-26 10:01:10,576 - INFO -   Relay 2: OFF
+2025-04-26 10:01:10,576 - INFO -   Relay 3: ON
+2025-04-26 10:01:10,576 - INFO -   Relay 4: OFF
+2025-04-26 10:01:10,576 - INFO -   Relay 5: ON
+2025-04-26 10:01:10,576 - INFO -   Relay 6: OFF
+2025-04-26 10:01:10,576 - INFO -   Relay 7: ON
+2025-04-26 10:01:10,576 - INFO -   Relay 8: OFF
+2025-04-26 10:01:10,576 - INFO - ✅ Profile 'odds-on' saved.
+2025-04-26 10:01:10,576 - INFO - 🔌 Connection closed.
+2025-04-26 10:01:29,071 - INFO - ✅ Connected to Modbus relay at 10.194.10.154:502
+2025-04-26 10:01:29,072 - INFO - 🔄 Setting ALL relays to OFF...
+2025-04-26 10:01:29,082 - INFO - ✅ Relay 1 set to OFF successfully.
+2025-04-26 10:01:29,145 - INFO - ✅ Relay 2 set to OFF successfully.
+2025-04-26 10:01:29,210 - INFO - ✅ Relay 3 set to OFF successfully.
+2025-04-26 10:01:29,274 - INFO - ✅ Relay 4 set to OFF successfully.
+2025-04-26 10:01:29,336 - INFO - ✅ Relay 5 set to OFF successfully.
+2025-04-26 10:01:29,398 - INFO - ✅ Relay 6 set to OFF successfully.
+2025-04-26 10:01:29,463 - INFO - ✅ Relay 7 set to OFF successfully.
+2025-04-26 10:01:29,528 - INFO - ✅ Relay 8 set to OFF successfully.
+2025-04-26 10:01:29,580 - INFO - ✅ All relays updated.
+2025-04-26 10:01:29,580 - INFO - 🔌 Connection closed.
+2025-04-26 10:01:41,397 - INFO - ✅ Connected to Modbus relay at 10.194.10.154:502
+2025-04-26 10:01:41,397 - INFO - 🔄 Loading profile 'odds-on'...
+2025-04-26 10:01:41,407 - INFO - ✅ Relay 1 set to ON successfully.
+2025-04-26 10:01:41,475 - INFO - ✅ Relay 2 set to OFF successfully.
+2025-04-26 10:01:41,539 - INFO - ✅ Relay 3 set to ON successfully.
+2025-04-26 10:01:41,603 - INFO - ✅ Relay 4 set to OFF successfully.
+2025-04-26 10:01:41,668 - INFO - ✅ Relay 5 set to ON successfully.
+2025-04-26 10:01:41,732 - INFO - ✅ Relay 6 set to OFF successfully.
+2025-04-26 10:01:41,796 - INFO - ✅ Relay 7 set to ON successfully.
+2025-04-26 10:01:41,861 - INFO - ✅ Relay 8 set to OFF successfully.
+2025-04-26 10:01:41,915 - INFO - ✅ Profile applied.
+2025-04-26 10:01:41,915 - INFO - 🔌 Connection closed.
+2025-04-26 10:02:05,637 - WARNING - Attempt 1/3: Connection failed. Retrying...
+2025-04-26 10:02:11,672 - WARNING - Attempt 2/3: Connection failed. Retrying...
+2025-04-26 10:02:17,943 - WARNING - Attempt 3/3: Connection failed. Retrying...
+2025-04-26 10:02:18,948 - ERROR - ❌ Could not connect to Modbus relay after retries.

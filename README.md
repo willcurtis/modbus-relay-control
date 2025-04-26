@@ -3,13 +3,12 @@
 Control an 8-relay Modbus TCP device easily using a command-line tool or an interactive menu.
 
 Supports:
-
 - Turning individual relays ON/OFF
 - Turning all relays ON/OFF
 - Reading relay states
 - Saving relay states as profiles
 - Loading relay states from profiles
-- Listing available profiles
+- Listing available profiles (no device connection needed)
 
 ---
 
@@ -27,14 +26,12 @@ Supports:
 ## 🚀 Installation
 
 1. Clone the repository:
-
    ```bash
-   git clone https://github.com/willcurtis/modbus-relay-cli.git
+   git clone https://github.com/yourusername/modbus-relay-cli.git
    cd modbus-relay-cli
    ```
 
 2. Install dependencies:
-
    ```bash
    pip install pymodbus
    ```
@@ -48,40 +45,35 @@ Supports:
 Run one-off commands:
 
 - **Turn a specific relay ON or OFF**
-
   ```bash
   python modbus_relay_cli.py --ip 10.194.10.14 --relay 3 --state on
   ```
 
 - **Turn ALL relays ON or OFF**
-
   ```bash
   python modbus_relay_cli.py --ip 10.194.10.14 --all --state off
   ```
 
 - **Read all relay statuses**
-
   ```bash
   python modbus_relay_cli.py --ip 10.194.10.14 --status
   ```
 
 - **Save current relay states as a profile**
-
   ```bash
   python modbus_relay_cli.py --ip 10.194.10.14 --save-profile myprofile
   ```
 
 - **Load a saved profile**
-
   ```bash
   python modbus_relay_cli.py --ip 10.194.10.14 --load-profile myprofile
   ```
 
-- **List available profiles**
-
+- **List available profiles (no device required)**
   ```bash
-  python modbus_relay_cli.py --ip 10.194.10.14 --list-profiles
+  python modbus_relay_cli.py --list-profiles
   ```
+
 
 ### Interactive Menu
 
@@ -92,7 +84,6 @@ python modbus_relay_cli.py --ip 10.194.10.14
 ```
 
 You’ll see a simple menu:
-
 ```
 🔹 Modbus Relay Control Menu 🔹
 1️⃣  Toggle Relay ON/OFF
@@ -134,6 +125,4 @@ This project is licensed under the MIT License.
 Built with ❤️ for Modbus engineers, automation specialists, and hobbyists.
 
 ---
-
-
 
