@@ -169,6 +169,9 @@ A lightweight Flask web application is included to control and monitor the Modbu
 - Ensure your Modbus relay device is reachable on the network.
 
 ## 🖼️ Example Web Interface
+
+<img width="546" alt="modbus_web_app" src="https://github.com/user-attachments/assets/7af08e21-c799-4ab9-87ea-2fa59299f4ca" />
+
 > Relay dashboard showing 8 relays with real-time status and control buttons for toggling and pulsing.
 
 ---
