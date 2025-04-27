@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import time
 import sys
 import argparse
@@ -143,16 +144,39 @@ def list_profiles():
     for name in profiles.keys():
         logger.info(f" - {name}")
 
+def run_cli_command(controller, args):
+    if args.save_profile:
+        save_profile(controller, args.save_profile)
+    elif args.load_profile:
+        load_profile(controller, args.load_profile)
+    elif args.list_profiles:
+        list_profiles()
+    elif args.momentary and args.relay:
+        controller.set_relay_state(args.relay, True)
+        time.sleep(args.duration)
+        controller.set_relay_state(args.relay, False)
+        logger.info(f"✅ Relay {args.relay} pulsed ON for {args.duration} seconds.")
+    elif args.all:
+        state = args.state.lower() == "on"
+        controller.set_all_relays(state)
+    elif args.relay:
+        state = args.state.lower() == "on"
+        controller.set_relay_state(args.relay, state)
+    elif args.status:
+        controller.read_all_relays()
+    controller.close()
+
 def interactive_menu(controller):
     while True:
         print("\n🔹 Modbus Relay Control Menu 🔹")
         print("1️⃣  Toggle Relay ON/OFF")
         print("2️⃣  Enable/Disable ALL Relays")
         print("3️⃣  Show Relay Status")
-        print("4️⃣  Save Profile")
-        print("5️⃣  Load Profile")
-        print("6️⃣  List Profiles")
-        print("7️⃣  Exit")
+        print("4️⃣  Pulse a Relay ON momentarily")
+        print("5️⃣  Save Profile")
+        print("6️⃣  Load Profile")
+        print("7️⃣  List Profiles")
+        print("8️⃣  Exit")
         choice = input("\nEnter your choice: ")
 
         if choice == "1":
@@ -184,51 +208,54 @@ def interactive_menu(controller):
             controller.read_all_relays()
 
         elif choice == "4":
+            try:
+                relay_id = int(input("\nEnter relay number (1-8) to pulse: "))
+                if 1 <= relay_id <= 8:
+                    duration = input("Enter pulse duration in seconds (default 1): ").strip()
+                    if not duration:
+                        duration = 1
+                    else:
+                        duration = float(duration)
+                    controller.set_relay_state(relay_id, True)
+                    time.sleep(duration)
+                    controller.set_relay_state(relay_id, False)
+                    logger.info(f"✅ Relay {relay_id} pulsed ON for {duration} seconds.")
+                else:
+                    logger.error("❌ Invalid relay number.")
+            except ValueError:
+                logger.error("❌ Invalid input. Please enter a number.")
+
+        elif choice == "5":
             profile_name = input("Enter profile name to save: ").strip()
             save_profile(controller, profile_name)
 
-        elif choice == "5":
+        elif choice == "6":
             profile_name = input("Enter profile name to load: ").strip()
             load_profile(controller, profile_name)
 
-        elif choice == "6":
+        elif choice == "7":
             list_profiles()
 
-        elif choice == "7":
+        elif choice == "8":
             controller.close()
             sys.exit(0)
 
         else:
             logger.error("❌ Invalid menu choice.")
 
-def run_cli_command(controller, args):
-    if args.save_profile:
-        save_profile(controller, args.save_profile)
-    elif args.load_profile:
-        load_profile(controller, args.load_profile)
-    elif args.list_profiles:
-        list_profiles()
-    elif args.all:
-        state = args.state.lower() == "on"
-        controller.set_all_relays(state)
-    elif args.relay:
-        state = args.state.lower() == "on"
-        controller.set_relay_state(args.relay, state)
-    elif args.status:
-        controller.read_all_relays()
-    controller.close()
-
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Control Modbus TCP Relay Board.")
     parser.add_argument("--ip", help="IP address of the relay board")
     parser.add_argument("--port", type=int, default=502, help="TCP port (default 502)")
-    parser.add_argument("--relay", type=int, help="Relay number to toggle (1-8)")
+    parser.add_argument("--relay", type=int, help="Relay number to toggle or pulse (1-8)")
     parser.add_argument("--state", choices=["on", "off"], help="State to set relay or all relays")
     parser.add_argument("--all", action="store_true", help="Set all relays on/off")
     parser.add_argument("--status", action="store_true", help="Read status of all relays")
     parser.add_argument("--save-profile", type=str, help="Save current relay state as a profile")
     parser.add_argument("--load-profile", type=str, help="Load relay states from a saved profile")
     parser.add_argument("--list-profiles", action="store_true", help="List all available profiles")
+    parser.add_argument("--momentary", action="store_true", help="Pulse relay ON then OFF")
+    parser.add_argument("--duration", type=float, default=1.0, help="Pulse duration in seconds (default 1)")
     return parser.parse_args()
 
 def main():
@@ -247,7 +274,7 @@ def main():
     if not controller.connected:
         sys.exit(1)
 
-    if args.relay or args.all or args.status or args.save_profile or args.load_profile:
+    if args.relay or args.all or args.status or args.save_profile or args.load_profile or args.momentary:
         run_cli_command(controller, args)
     else:
         interactive_menu(controller)

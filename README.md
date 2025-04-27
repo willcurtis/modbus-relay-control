@@ -1,9 +1,10 @@
-# Modbus Relay Controller CLI
+# Modbus Relay Control CLI
 
-Control an 8-relay Modbus TCP device easily using a command-line tool or an interactive menu.
+Control 8-channel Modbus TCP relay boards easily using a command-line tool or an interactive menu.
 
 Supports:
 - Turning individual relays ON/OFF
+- Momentary pulse control (ON then OFF)
 - Turning all relays ON/OFF
 - Reading relay states
 - Saving relay states as profiles
@@ -20,6 +21,7 @@ Supports:
 - **Logging** of all actions to `relay_control.log`
 - **Automatic reconnection** on startup
 - **Timeouts and error handling**
+- **Homebrew support** for easy installation
 
 ---
 
@@ -27,13 +29,19 @@ Supports:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/modbus-relay-cli.git
-   cd modbus-relay-cli
+   git clone https://github.com/willcurtis/modbus-relay-control.git
+   cd modbus-relay-control
    ```
 
 2. Install dependencies:
    ```bash
    pip install pymodbus
+   ```
+
+3. (Optional) Install via Homebrew:
+   ```bash
+   brew tap willcurtis/modbus
+   brew install modbus-relay-control
    ```
 
 ---
@@ -46,32 +54,37 @@ Run one-off commands:
 
 - **Turn a specific relay ON or OFF**
   ```bash
-  python modbus_relay_cli.py --ip 10.194.10.14 --relay 3 --state on
+  modbus-relay --ip 10.194.10.14 --relay 3 --state on
+  ```
+
+- **Pulse a specific relay ON then OFF**
+  ```bash
+  modbus-relay --ip 10.194.10.14 --relay 3 --momentary --duration 1
   ```
 
 - **Turn ALL relays ON or OFF**
   ```bash
-  python modbus_relay_cli.py --ip 10.194.10.14 --all --state off
+  modbus-relay --ip 10.194.10.14 --all --state off
   ```
 
 - **Read all relay statuses**
   ```bash
-  python modbus_relay_cli.py --ip 10.194.10.14 --status
+  modbus-relay --ip 10.194.10.14 --status
   ```
 
 - **Save current relay states as a profile**
   ```bash
-  python modbus_relay_cli.py --ip 10.194.10.14 --save-profile myprofile
+  modbus-relay --ip 10.194.10.14 --save-profile myprofile
   ```
 
 - **Load a saved profile**
   ```bash
-  python modbus_relay_cli.py --ip 10.194.10.14 --load-profile myprofile
+  modbus-relay --ip 10.194.10.14 --load-profile myprofile
   ```
 
 - **List available profiles (no device required)**
   ```bash
-  python modbus_relay_cli.py --list-profiles
+  modbus-relay --list-profiles
   ```
 
 
@@ -80,7 +93,7 @@ Run one-off commands:
 Just run without extra options:
 
 ```bash
-python modbus_relay_cli.py --ip 10.194.10.14
+modbus-relay --ip 10.194.10.14
 ```
 
 You’ll see a simple menu:
@@ -89,10 +102,11 @@ You’ll see a simple menu:
 1️⃣  Toggle Relay ON/OFF
 2️⃣  Enable/Disable ALL Relays
 3️⃣  Show Relay Status
-4️⃣  Save Profile
-5️⃣  Load Profile
-6️⃣  List Profiles
-7️⃣  Exit
+4️⃣  Pulse a Relay ON momentarily
+5️⃣  Save Profile
+6️⃣  Load Profile
+7️⃣  List Profiles
+8️⃣  Exit
 ```
 
 ---
@@ -108,18 +122,12 @@ You’ll see a simple menu:
 
 ## 📋 Requirements
 
+- macOS, Linux (tested)
 - Python 3.7+
 - `pymodbus`
 - A reachable Modbus TCP relay device (8 coils expected)
 
 ---
-
-### Install via Homebrew:
-
-```bash
-brew tap willcurtis/tools
-brew install modbus-relay-control
-```
 
 ## 📜 License
 
@@ -132,4 +140,6 @@ This project is licensed under the MIT License.
 Built with ❤️ for Modbus engineers, automation specialists, and hobbyists.
 
 ---
+
+
 
