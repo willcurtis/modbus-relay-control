@@ -9,7 +9,7 @@ from pymodbus.client import ModbusTcpClient
 app = Flask(__name__)
 
 # Config: Your relay board
-MODBUS_HOST = "10.194.10.154"  # <-- CHANGE to your relay IP
+MODBUS_HOST = "10.194.10.154"  # <-- CHANGE to your relay board IP
 MODBUS_PORT = 502
 
 # Setup Modbus Client
@@ -25,12 +25,17 @@ def get_relay_states():
 
 def set_relay(relay_id, state):
     address = relay_id - 1
-    client.write_coil(address, state)
+    client.write_coil(address=address, value=state)
 
 def pulse_relay(relay_id, duration=1.0):
     set_relay(relay_id, True)
     time.sleep(duration)
     set_relay(relay_id, False)
+
+def set_all_relays(state):
+    for i in range(1, 9):
+        set_relay(i, state)
+        time.sleep(0.05)
 
 # Routes
 @app.route('/')
@@ -54,6 +59,16 @@ def api_relay(relay_id, action):
         return jsonify({"error": "Invalid action"}), 400
     return jsonify({"success": True})
 
+@app.route('/api/all/on', methods=["POST"])
+def api_all_on():
+    threading.Thread(target=lambda: set_all_relays(True)).start()
+    return jsonify({"success": True})
+
+@app.route('/api/all/off', methods=["POST"])
+def api_all_off():
+    threading.Thread(target=lambda: set_all_relays(False)).start()
+    return jsonify({"success": True})
+
 # HTML + JS frontend
 INDEX_HTML = """
 <!DOCTYPE html>
@@ -65,12 +80,19 @@ INDEX_HTML = """
     body { font-family: Arial, sans-serif; margin: 40px; }
     .relay { display: flex; align-items: center; margin-bottom: 10px; }
     .relay button { width: 100px; height: 40px; margin-right: 10px; }
+    .group-buttons { margin-bottom: 30px; }
     .on { background-color: lightgreen; }
     .off { background-color: lightgray; }
   </style>
 </head>
 <body>
   <h1>🔌 Modbus Relay Control Panel</h1>
+
+  <div class="group-buttons">
+    <button onclick="allOn()" style="background-color: lightgreen; width: 120px; height: 50px; margin-right: 10px;">All ON</button>
+    <button onclick="allOff()" style="background-color: lightcoral; width: 120px; height: 50px;">All OFF</button>
+  </div>
+
   <div id="relays"></div>
 
 <script>
@@ -102,6 +124,14 @@ function updateRelays() {
         container.appendChild(div);
       });
     });
+}
+
+function allOn() {
+  fetch('/api/all/on', {method: 'POST'}).then(() => setTimeout(updateRelays, 1000));
+}
+
+function allOff() {
+  fetch('/api/all/off', {method: 'POST'}).then(() => setTimeout(updateRelays, 1000));
 }
 
 setInterval(updateRelays, 5000);
